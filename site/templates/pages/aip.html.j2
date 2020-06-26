@@ -9,15 +9,15 @@ AIP-{{ aip.id }}: {{ aip.title }}
   <table id="aip-summary">
     <tr><th colspan="2">{{ aip.title }}</th></tr>
     <tr><td>Number</td><td>{{ aip.id }}</td></tr>
-    <tr><td>Permalink</td><td>{{ aip.absolute_url }}</td></tr>
-    {% if aip.scope -%}
+    <tr><td>Permalink</td><td>{{ site.base_url }}{{ aip.relative_uri }}</td></tr>
+    {# {% if aip.scope -%}
     <tr><td>Scope</td><td>{{ page.areas[page.aip.scope] }}</td></tr>
-    {% endif -%}
+    {% endif -%} -#}
     {% if aip.state -%}
     <tr><td>State</td><td>{{ aip.state | capitalize }}</td></tr>
     {% endif -%}
-    {% if page.aip.created -%}
-    <tr><td>Created</td><td>{{ page.aip.created }}</td></tr>
+    {% if aip.created -%}
+    <tr><td>Created</td><td>{{ aip.created }}</td></tr>
     {% endif -%}
   </table>
   {#
@@ -27,9 +27,9 @@ AIP-{{ aip.id }}: {{ aip.title }}
   #}
   <section class="docs-component-sidebar-actions">
     <ul>
-      <li><a href="{{ site.github.repository_url }}/issues/">File Bug</a></li>
-      <li><a href="{{ site.github.repository_url }}/blob/master/{{ aip.repo_path }}">View source</a></li>
-      <li><a href="{{ site.github.repository_url }}/edit/master/{{ aip.repo_path }}">Edit this page</a></li>
+      <li><a href="{{ site.repo_url }}/issues/">File Bug</a></li>
+      <li><a href="{{ site.repo_url }}/blob/master/{{ aip.repo_path }}">View source</a></li>
+      <li><a href="{{ site.repo_url }}/edit/master/{{ aip.repo_path }}">Edit this page</a></li>
     </ul>
   </section>
 </aside>
@@ -37,7 +37,7 @@ AIP-{{ aip.id }}: {{ aip.title }}
   {% include 'includes/breadcrumb.html.j2' %}
   {% include 'includes/state_banners/' + aip.state + '.html.j2' ignore missing %}
   <h4 class="aip-number">AIP-{{ aip.id }}</h4>
-  {{ content }}
+  {{ aip.content }}
   {% include 'includes/footer.html.j2' %}
 </section>
 {% endblock %}

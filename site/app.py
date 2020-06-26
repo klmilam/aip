@@ -12,12 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from flask import Flask
+import dataclasses
 
-from generator.datatypes import AIP
-from generator.template import template
+from flask import Flask, render_template, request
+import jinja2
+
+from generator import datatypes
+
 
 app = Flask(__name__)
+site = datatypes.Site.load()
+app.jinja_env.filters['relative_url'] = site.relative_url
+app.jinja_env.undefined = jinja2.StrictUndefined
 
 
 @app.route('/')
@@ -30,7 +36,10 @@ def aip(aip_id: int):
     """Display a single AIP document."""
 
     # Load the AIP from disk.
-    aip = AIP.load('general/{:04d}'.format(aip_id))
+    aip = datatypes.AIP.load('general/{:04d}'.format(aip_id))
 
     # Return the single AIP template.
-    return template('pages/aip.html.j2', aip=aip)
+    return render_template('pages/aip.html.j2',
+        aip=aip,
+        site=dataclasses.replace(site, path=request.path),
+    )

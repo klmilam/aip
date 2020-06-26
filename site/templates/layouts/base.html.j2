@@ -7,13 +7,13 @@
     <meta name="viewport" content="width=device-width,maximum-scale=2">
     <link href="//fonts.googleapis.com/css?family=Roboto:100,300,400,500,700|Google+Sans:400,500|Product+Sans:400&amp;lang=en" rel="stylesheet"></link>
     <link rel="stylesheet" type="text/css" media="screen" href="//www.gstatic.com/glue/v22_1/glue.min.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="/assets/css/style.css?v={{ meta.revision }}">
+    <link rel="stylesheet" type="text/css" media="screen" href="/assets/css/style.css?v={{ site.revision }}">
     {#
     {% for stylesheet in page.css -%}
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ stylesheet }}?v={{ meta.revision }}">
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ stylesheet }}?v={{ site.revision }}">
     {% endfor -%}
     -#}
-    <link rel="stylesheet" type="text/css" media="print" href="/assets/css/print.css?v={{ meta.revision }}">
+    <link rel="stylesheet" type="text/css" media="print" href="/assets/css/print.css?v={{ site.revision }}">
     <script type="text/javascript" src="//code.jquery.com/jquery-3.4.0.min.js"></script>
     <script type="text/javascript" src="//www.gstatic.com/glue/latest/glue-detect.min.js"></script>
     <script type="text/javascript">
@@ -22,10 +22,10 @@
         $('html').css('visibility', 'visible');
       });
     </script>
-    <script type="text/javascript" src="/assets/js/global.js?v={{ meta.revision }}"></script>
+    <script type="text/javascript" src="/assets/js/global.js?v={{ site.revision }}"></script>
     {#
     {% for js_script in page.js -%}
-    <script type="text/javascript" src="{{ js_script }}?v={{ meta.revision }}"></script>
+    <script type="text/javascript" src="{{ js_script }}?v={{ site.revision }}"></script>
     {% endfor -%}
     -#}
     {# {% seo %} -- port this #}

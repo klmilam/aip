@@ -12,17 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List, Optional, Set
+from typing import Any, Dict, List, Optional, Set
 import dataclasses
 import datetime
 import io
 import os
+import uuid
 
+import jinja2
 import yaml
 
-AIP_DIR = os.path.realpath(
-    os.path.join(os.path.dirname(__file__), '..', '..', 'aip'),
-)
+BASEDIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', '..'))
+AIP_DIR = os.path.join(BASEDIR, 'aip')
+SITE_DIR = os.path.join(BASEDIR, 'site')
+DATA_DIR = os.path.join(SITE_DIR, 'data')
 
 
 @dataclasses.dataclass
@@ -52,6 +55,7 @@ class AIP:
     id: int
     state: str
     created: datetime.date
+    title: str = ''
     content: str = ''
     scope: Optional[str] = None
     toc: List[Heading] = dataclasses.field(default_factory=list)
@@ -63,7 +67,7 @@ class AIP:
         # First, get the meta file and create the AIP object based on it.
         abs_dir = os.path.join(AIP_DIR, directory)
         meta = yaml.load(io.open(os.path.join(abs_dir, 'meta.yaml'), 'r'))
-        aip = AIP(**meta)
+        aip = cls(**meta)
 
         # Next, iterate over the Markdown contents and injest them.
         for f in sorted([os.path.join(abs_dir, i) for i
@@ -87,6 +91,8 @@ class AIP:
         self.content += snippet
         line = snippet.lstrip().splitlines()[0]
         if (level := line.count('#')) > 0:
+            if level == 1 and not self.title:
+                self.title = line.lstrip('# ')
             self.toc.append(Heading(level=level, title=line.lstrip('# ')))
 
     def injest_changelog(self, filename: str):
@@ -94,6 +100,16 @@ class AIP:
         conf = yaml.load(io.open(filename, 'r'))
         for cl in conf.get('changelog', ()):
             self.changelog.add(Change(**cl))
+
+    @property
+    def relative_uri(self) -> str:
+        """Return the relative URI for this AIP."""
+        return f'/{self.id}'
+
+    @property
+    def repo_path(self) -> str:
+        """Return the relative path in the GitHub repository."""
+        return f'/aip/{self.id:04d}.md'
 
     @property
     def updated(self):
@@ -107,5 +123,30 @@ class AIP:
 
 
 @dataclasses.dataclass
-class Meta:
+class Site:
+    base_url: str
+    repo_url: str
     revision: str
+    path: Optional[str] = None
+    data: Dict[str, Any] = dataclasses.field(default_factory=dict)
+
+    @classmethod
+    def load(cls) -> 'Site':
+        # Load the configuration.
+        config = yaml.load(io.open(os.path.join(SITE_DIR, 'config.yaml'), 'r'))
+
+        # Load all site data.
+        data: Dict[str, Any] = {}
+        for fn in os.listdir(DATA_DIR):
+            data[fn[:-5]] = yaml.load(io.open(os.path.join(DATA_DIR, fn), 'r'))
+
+        # Return a new Site object.
+        return cls(
+            base_url=config.get('base_url', ''),
+            data=data,
+            revision=str(uuid.uuid4())[-8:],
+            repo_url=config.get('repo_url', jinja2.Undefined())
+        )
+
+    def relative_url(self, uri) -> str:
+        return f'{self.base_url}{uri}'

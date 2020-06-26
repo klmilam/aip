@@ -1,6 +1,6 @@
 <section class="section-breadcrumbs">
   <nav
-    class="glue-breadcrumbs glue-mod-mt-std glue-mod-mb-std{% if page.url == '/home' %} no-breadcrumb{% endif %}"
+    class="glue-breadcrumbs glue-mod-mt-std glue-mod-mb-std{% if site.path == '/home' %} no-breadcrumb{% endif %}"
     aria-label="You are here."
   >
     <ol class="glue-breadcrumbs__list aip-breadcrumbs">
@@ -13,12 +13,12 @@
       <li class="glue-breadcrumbs__item" aria-level="2">
         <!-- prettier-ignore -->
         <a class="glue-breadcrumbs__link"
-         href="{{ page.aip.scope | default: 'general' | relative_url }}">
-        {% if page.aip.scope %}{{ page.areas[page.aip.scope] }}
+         href="{{ aip.scope | default('general') | relative_url }}">
+        {% if aip.scope %}{{ areas[page.aip.scope] }}
         {% else %}General{% endif %} AIPs
       </a>
       </li>
-      {% elif page.newsletter %}
+      {% elif newsletter %}
       <li class="glue-breadcrumbs__item" aria-level="2">
         <a class="glue-breadcrumbs__link" href="/news">
           News
@@ -29,7 +29,7 @@
         class="glue-breadcrumbs__item glue-breadcrumbs__item--active"
         aria-level="3"
       >
-        {{ page.title }}
+        {{ aip.title }}
       </li>
     </ol>
   </nav>
