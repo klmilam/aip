@@ -12,25 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from flask import Flask
+import uuid
 
-from generator.datatypes import AIP
-from generator.template import template
+from flask import render_template
 
-app = Flask(__name__)
-
-
-@app.route('/')
-def hello():
-    return 'hello!'
+from generator import datatypes
 
 
-@app.route('/<int:aip_id>')
-def aip(aip_id: int):
-    """Display a single AIP document."""
-
-    # Load the AIP from disk.
-    aip = AIP.load('general/{:04d}'.format(aip_id))
-
-    # Return the single AIP template.
-    return template('pages/aip.html.j2', aip=aip)
+def template(path: str, **kwargs):
+    """Return a Jinja template with the provided context, adding metadata."""
+    kwargs['meta'] = datatypes.Meta(revision=str(uuid.uuid4())[-8:])
+    return render_template(path, **kwargs)

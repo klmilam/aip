@@ -5,7 +5,7 @@ FROM python:3.8-alpine
 # This will copy everything *at build time* (not at runtime), so it is
 # still important to use `--mount` to get a reasonable development loop.
 # This makes the image work for both purposes, though.
-COPY . /code/
+COPY site/requirements.txt /code/site/requirements.txt
 WORKDIR /code/site/
 
 # Install Python packages for this project.

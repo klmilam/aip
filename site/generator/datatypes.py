@@ -104,3 +104,8 @@ class AIP:
         if self.changelog:
             return sorted(self.changelog)[0].date
         return self.created
+
+
+@dataclasses.dataclass
+class Meta:
+    revision: str
