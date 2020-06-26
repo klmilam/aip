@@ -5,11 +5,11 @@
   >
     <ol class="glue-breadcrumbs__list aip-breadcrumbs">
       <li class="glue-breadcrumbs__item" aria-level="1">
-        <a class="glue-breadcrumbs__link" href="{{ '/' | relative_url }}">
+        <a class="glue-breadcrumbs__link" href="/">
           API Improvement Proposals
         </a>
       </li>
-      {% if page.aip %}
+      {% if aip %}
       <li class="glue-breadcrumbs__item" aria-level="2">
         <!-- prettier-ignore -->
         <a class="glue-breadcrumbs__link"
@@ -18,7 +18,7 @@
         {% else %}General{% endif %} AIPs
       </a>
       </li>
-      {% endif %} {% if page.newsletter %}
+      {% elif page.newsletter %}
       <li class="glue-breadcrumbs__item" aria-level="2">
         <a class="glue-breadcrumbs__link" href="/news">
           News
