@@ -4,7 +4,7 @@ aip_index:
   display: General
 exclude_from_search: true
 js:
-  - /assets/js/aip/aip-index.js
+  - /static/js/aip/aip-index.js
 permalink: /general
 ---
 

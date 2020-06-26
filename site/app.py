@@ -13,8 +13,10 @@
 # limitations under the License.
 
 import dataclasses
+import re
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, Response
+from scss.compiler import compile_file
 import jinja2
 
 from generator import datatypes
@@ -43,3 +45,10 @@ def aip(aip_id: int):
         aip=aip,
         site=dataclasses.replace(site, path=request.path),
     )
+
+
+@app.route('/static/css/<path:css_file>')
+def scss(css_file: str):
+    """Compile the given SCSS file and return it."""
+    scss_file = re.sub(r'\.css$', '.scss', css_file)
+    return Response(compile_file(f'scss/{scss_file}'), mimetype='text/css')

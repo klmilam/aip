@@ -22,7 +22,7 @@ defaults:
         cloud: Google Cloud Platform
         client-libraries: Client Libraries
       js:
-        - /assets/js/proto-syntax.js
+        - /static/js/proto-syntax.js
   - scope:
       path: aip
     values:

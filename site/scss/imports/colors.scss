@@ -11,7 +11,7 @@ $glue-greys: (
   600: #80868b,
   700: #5f6368,
   800: #3c4043,
-  900: #202124
+  900: #202124,
 );
 $glue-blues: (
   50: #e8f0fe,
@@ -23,7 +23,7 @@ $glue-blues: (
   600: #1a73e8,
   700: #1967d2,
   800: #185abc,
-  900: #174ea6
+  900: #174ea6,
 );
 $glue-greens: (
   50: #e6f4ea,
@@ -35,7 +35,7 @@ $glue-greens: (
   600: #1e8e3e,
   700: #188038,
   800: #137333,
-  900: #0d652d
+  900: #0d652d,
 );
 $glue-reds: (
   50: #fce8e6,
@@ -47,7 +47,7 @@ $glue-reds: (
   600: #d93025,
   700: #c5221f,
   800: #b31412,
-  900: #a50e0e
+  900: #a50e0e,
 );
 $glue-yellows: (
   50: #fef7e0,
@@ -59,7 +59,7 @@ $glue-yellows: (
   600: #f9ab00,
   700: #f29900,
   800: #ea8600,
-  900: #e37400
+  900: #e37400,
 );
 $glue-purples: (
   900: #681da8,
@@ -101,12 +101,12 @@ $glue-red-50: map-get($glue-reds, 50);
 $glue-red-100: map-get($glue-reds, 100);
 $glue-red-200: map-get($glue-reds, 200);
 $glue-red-300: map-get($glue-reds, 300);
-$glue-red-400: map-get($glue-reds, 400);;
+$glue-red-400: map-get($glue-reds, 400);
 $glue-red-500: map-get($glue-reds, 500);
 $glue-red-600: map-get($glue-reds, 600);
 $glue-red-700: map-get($glue-reds, 700);
 $glue-red-800: map-get($glue-reds, 800);
-$glue-red-900: map-get($glue-reds, 900);;
+$glue-red-900: map-get($glue-reds, 900);
 $glue-yellow-50: map-get($glue-yellows, 50);
 $glue-yellow-100: map-get($glue-yellows, 100);
 $glue-yellow-200: map-get($glue-yellows, 200);
@@ -125,7 +125,7 @@ $glue-color-name-to-palette: (
   'green': $glue-greens,
   'red': $glue-reds,
   'yellow': $glue-yellows,
-  'purple': $glue-purples
+  'purple': $glue-purples,
 );
 // Generic color variables - common colors for components.
 $glue-color-primary-black: $glue-grey-900 !default;
@@ -134,6 +134,6 @@ $glue-color-focus-background: $glue-grey-100 !default;
 $glue-color-link-resting: $glue-blue-600 !default;
 $glue-color-link-active: $glue-blue-900 !default;
 $glue-color-link-visited: $glue-purple-900 !default;
-$glue-color-focus-background-rgba: rgba($glue-grey-900, .06) !default;
+$glue-color-focus-background-rgba: rgba($glue-grey-900, 0.06) !default;
 $glue-white: $glue-grey-0 !default;
 $glue-black: #000 !default;

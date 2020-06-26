@@ -9,16 +9,17 @@ AIP-{{ aip.id }}: {{ aip.title }}
   <table id="aip-summary">
     <tr><th colspan="2">{{ aip.title }}</th></tr>
     <tr><td>Number</td><td>{{ aip.id }}</td></tr>
-    <tr><td>Permalink</td><td>{{ site.base_url }}{{ aip.relative_uri }}</td></tr>
+    {% with permalink = site.base_url + aip.relative_uri -%}
+    <tr><td>Permalink</td><td><a href="{{ permalink }}">{{ permalink }}</a></td></tr>
+    {% endwith -%}
     {# {% if aip.scope -%}
     <tr><td>Scope</td><td>{{ page.areas[page.aip.scope] }}</td></tr>
     {% endif -%} -#}
     {% if aip.state -%}
     <tr><td>State</td><td>{{ aip.state | capitalize }}</td></tr>
     {% endif -%}
-    {% if aip.created -%}
     <tr><td>Created</td><td>{{ aip.created }}</td></tr>
-    {% endif -%}
+    <tr><td>Updated</td><td>{{ aip.updated }}</td></tr>
   </table>
   {#
   <section id="aip-toc" class="docs-component-sidebar-toc">

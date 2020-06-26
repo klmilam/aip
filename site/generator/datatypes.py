@@ -66,12 +66,12 @@ class AIP:
         """Load an AIP object from the given directory and return it."""
         # First, get the meta file and create the AIP object based on it.
         abs_dir = os.path.join(AIP_DIR, directory)
-        meta = yaml.load(io.open(os.path.join(abs_dir, 'meta.yaml'), 'r'))
+        meta = yaml.safe_load(io.open(os.path.join(abs_dir, 'meta.yaml'), 'r'))
         aip = cls(**meta)
 
         # Next, iterate over the Markdown contents and injest them.
         for f in sorted([os.path.join(abs_dir, i) for i
-                         in os.listdir(abs_dir) if i.endswith('*.md')]):
+                         in os.listdir(abs_dir) if i.endswith('.md')]):
             aip.injest_content(f)
 
             # Check for an equivalent YAML file and load it if there is one.
@@ -97,7 +97,7 @@ class AIP:
 
     def injest_changelog(self, filename: str):
         """Injest a fragment of an AIP changelog into the object."""
-        conf = yaml.load(io.open(filename, 'r'))
+        conf = yaml.safe_load(io.open(filename, 'r'))
         for cl in conf.get('changelog', ()):
             self.changelog.add(Change(**cl))
 
@@ -133,12 +133,12 @@ class Site:
     @classmethod
     def load(cls) -> 'Site':
         # Load the configuration.
-        config = yaml.load(io.open(os.path.join(SITE_DIR, 'config.yaml'), 'r'))
+        config = yaml.safe_load(io.open(os.path.join(SITE_DIR, 'config.yaml')))
 
         # Load all site data.
         data: Dict[str, Any] = {}
         for fn in os.listdir(DATA_DIR):
-            data[fn[:-5]] = yaml.load(io.open(os.path.join(DATA_DIR, fn), 'r'))
+            data[fn[:-5]] = yaml.safe_load(io.open(os.path.join(DATA_DIR, fn)))
 
         # Return a new Site object.
         return cls(
@@ -149,4 +149,5 @@ class Site:
         )
 
     def relative_url(self, uri) -> str:
-        return f'{self.base_url}{uri}'
+        base = '/'.join(self.base_url.split('/')[3:])
+        return f'{base}{uri}'
